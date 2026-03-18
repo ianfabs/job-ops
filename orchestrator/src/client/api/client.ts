@@ -38,6 +38,8 @@ import type {
   ResumeProfile,
   ResumeProjectCatalogItem,
   RxResumeMode,
+  SearchAggregationRunRequest,
+  SearchAggregationRunResponse,
   StageEvent,
   StageEventMetadata,
   StageTransitionTarget,
@@ -949,6 +951,15 @@ export async function cancelPipeline(): Promise<{
     alreadyRequested: boolean;
   }>("/pipeline/cancel", {
     method: "POST",
+  });
+}
+
+export async function runSearchAggregation(
+  input: SearchAggregationRunRequest,
+): Promise<SearchAggregationRunResponse> {
+  return fetchApi<SearchAggregationRunResponse>("/search-aggregations/run", {
+    method: "POST",
+    body: JSON.stringify(input),
   });
 }
 
