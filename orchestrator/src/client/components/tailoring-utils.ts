@@ -2,12 +2,14 @@ import type { ResumeProfile } from "@shared/types";
 
 export interface TailoredSkillGroup {
   name: string;
+  proficiency: string;
   keywords: string[];
 }
 
 export interface EditableSkillGroup {
   id: string;
   name: string;
+  proficiency: string;
   keywordsText: string;
 }
 
@@ -38,6 +40,7 @@ export function parseTailoredSkills(
       if (!item || typeof item !== "object") continue;
       const record = item as Record<string, unknown>;
       const name = typeof record.name === "string" ? record.name.trim() : "";
+      const proficiency = typeof record.proficiency === "string" ? record.proficiency.trim() : "";
       const keywordsRaw = Array.isArray(record.keywords)
         ? record.keywords
         : typeof record.keywords === "string"
@@ -49,11 +52,11 @@ export function parseTailoredSkills(
         .filter(Boolean);
 
       if (!name && keywords.length === 0) continue;
-      groups.push({ name, keywords });
+      groups.push({ name, proficiency, keywords });
     }
 
     if (legacyKeywords.length > 0) {
-      groups.push({ name: "Skills", keywords: legacyKeywords });
+      groups.push({ name: "Skills", proficiency: legacyKeywords.join(', '), keywords: legacyKeywords });
     }
 
     return groups;
@@ -73,6 +76,7 @@ export function toEditableSkillGroups(
   return groups.map((group) => ({
     id: createTailoredSkillDraftId(),
     name: group.name,
+    proficiency: group.proficiency,
     keywordsText: group.keywords.join(", "),
   }));
 }
@@ -84,13 +88,14 @@ export function fromEditableSkillGroups(
 
   for (const group of groups) {
     const name = group.name.trim();
+    const proficiency = group.proficiency.trim();
     const keywords = group.keywordsText
       .split(",")
       .map((value) => value.trim())
       .filter(Boolean);
 
     if (!name && keywords.length === 0) continue;
-    normalized.push({ name, keywords });
+    normalized.push({ name, proficiency, keywords });
   }
 
   return normalized;
@@ -123,13 +128,14 @@ export function getOriginalSkills(
         : typeof item.description === "string"
           ? item.description.trim()
           : "";
+    const proficiency = item.proficiency ?? '';
     const keywordsRaw = Array.isArray(item.keywords) ? item.keywords : [];
     const keywords = keywordsRaw
       .filter((value: unknown): value is string => typeof value === "string")
       .map((value: string) => value.trim())
       .filter(Boolean);
     if (!name && keywords.length === 0) continue;
-    groups.push({ name, keywords });
+    groups.push({ name, proficiency, keywords });
   }
 
   return groups;

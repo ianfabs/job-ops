@@ -348,6 +348,29 @@ export const TailoringSections: React.FC<TailoringSectionsProps> = ({
 
                         <div className="space-y-1">
                           <label
+                            htmlFor={`tailor-skill-group-proficiency-${group.id}`}
+                            className="text-[11px] font-medium text-muted-foreground"
+                          >
+                            Proficiency
+                          </label>
+                          <textarea
+                            id={`tailor-skill-group-proficiency-${group.id}`}
+                            className={`${inputClass} min-h-[88px]`}
+                            value={group.proficiency}
+                            onChange={(event) =>
+                              onUpdateSkillGroup(
+                                group.id,
+                                "proficiency",
+                                event.target.value,
+                              )
+                            }
+                            placeholder="TypeScript, Node.js, REST APIs..."
+                            disabled={disableInputs}
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label
                             htmlFor={`tailor-skill-group-keywords-${group.id}`}
                             className="text-[11px] font-medium text-muted-foreground"
                           >
