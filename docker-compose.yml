@@ -7,7 +7,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ghcr.io/dakheera47/job-ops:latest
     container_name: job-ops
     ports:
       - "3005:3001"
