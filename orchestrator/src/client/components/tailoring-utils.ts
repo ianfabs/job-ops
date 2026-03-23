@@ -2,12 +2,14 @@ import type { ResumeProfile } from "@shared/types";
 
 export interface TailoredSkillGroup {
   name: string;
+  proficiency: string;
   keywords: string[];
 }
 
 export interface EditableSkillGroup {
   id: string;
   name: string;
+  proficiency: string;
   keywordsText: string;
 }
 
