@@ -80,6 +80,7 @@ export interface ResumeProfile {
         id: string;
         name: string;
         description: string;
+        proficiency: string;
         level: number;
         keywords: string[];
         visible: boolean;
